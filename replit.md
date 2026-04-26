@@ -2,7 +2,7 @@
 
 ## Overview
 
-pnpm workspace monorepo using TypeScript. Each package manages its own dependencies.
+pnpm workspace monorepo using TypeScript. Each package manages its own dependencies. Also includes a Python Streamlit crypto dashboard.
 
 ## Stack
 
@@ -15,6 +15,7 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **Validation**: Zod (`zod/v4`), `drizzle-zod`
 - **API codegen**: Orval (from OpenAPI spec)
 - **Build**: esbuild (CJS bundle)
+- **Python**: 3.11 (Streamlit dashboard)
 
 ## Key Commands
 
@@ -25,3 +26,39 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - `pnpm --filter @workspace/api-server run dev` — run API server locally
 
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
+
+## LOA-CryptoHub Dashboard
+
+Streamlit-based crypto monitoring dashboard at `loa-crypto-dashboard/`.
+
+### Structure
+```
+loa-crypto-dashboard/
+├── app.py                    # Main page (home + top-10 prices)
+├── pages/
+│   ├── 1_Портфель.py         # Portfolio management + P&L
+│   ├── 2_История.py          # Transaction history
+│   ├── 3_Уведомления.py      # Price alerts
+│   ├── 4_Отчёты.py           # Report subscriptions
+│   ├── 5_Безопасность.py     # Security + session management
+│   ├── 6_Админ_панель.py     # Admin panel (admin only)
+│   └── 7_Мониторинг.py       # System monitoring (admin only)
+├── utils/
+│   ├── api_client.py         # API integration + mock data
+│   └── theme_manager.py      # Theme management (Dark/Light/Neon/Blue)
+├── requirements.txt
+└── .streamlit/config.toml
+```
+
+### Environment Variables
+- `API_BASE_URL` — Backend API URL (default: `http://localhost:8080`)
+
+### Test Credentials
+- VK ID `1` — regular user (Expert subscription)
+- VK ID `42` — administrator
+- VK ID `100` — expert user
+
+### Workflow
+- Name: `LOA-CryptoHub Dashboard`
+- Command: `cd loa-crypto-dashboard && streamlit run app.py`
+- Port: 5000
