@@ -1,0 +1,79 @@
+Ты находишься в проекте loa-crypto-dashboard (Streamlit дашборд).
+
+Полностью замени содержимое файла `utils/api_client.py` на приведённый ниже код. Никаких Git-команд не выполняй, только измени файл.
+
+Код для вставки:
+
+```python
+import os
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+API_BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:8000")
+REQUEST_TIMEOUT = 10
+
+def _api_get(endpoint, params=None):
+    try:
+        url = f"{API_BASE_URL}{endpoint}"
+        resp = requests.get(url, params=params, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+        return resp.json(), True
+    except Exception:
+        return None, False
+
+def get_prices():
+    data, ok = _api_get("/api/v1/prices/")
+    if ok and data and "data" in data:
+        transformed = []
+        for item in data["data"]:
+            transformed.append({
+                "symbol": item.get("symbol"),
+                "name": item.get("name"),
+                "price": item.get("price_usd", 0.0),
+                "change_24h": item.get("change_24h", 0.0),
+                "market_cap": item.get("market_cap", 0),
+                "volume_24h": item.get("volume_24h", 0),
+            })
+        return transformed, True
+    return [], False
+
+def get_user(user_id):
+    return {"user_id": user_id, "plan": "expert", "is_admin": (user_id == "834021121")}, True
+
+def get_portfolio(user_id):
+    return [], True
+
+def add_portfolio_item(user_id, symbol, amount, avg_buy_price):
+    return True
+
+def get_alerts(user_id):
+    return [], True
+
+def create_alert(user_id, symbol, condition, target_price):
+    return True
+
+def delete_alert(alert_id):
+    return True
+
+def get_transactions(user_id):
+    return [], True
+
+def get_reports_subscription(user_id):
+    return {"subscribed": False}, True
+
+def update_reports_subscription(user_id, subscribed, email, frequency):
+    return True
+
+def get_system_status():
+    return {"status": "ok"}, True
+
+def get_all_users():
+    return [], True
+
+def get_logs():
+    return [], True
+
+def delete_user_data(user_id):
+    return True
+После завершения сообщи: "Файл api_client.py обновлён. Теперь вы можете запушить изменения на GitHub вручную."
