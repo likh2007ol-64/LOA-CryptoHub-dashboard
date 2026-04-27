@@ -17,6 +17,24 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+st.markdown(
+    """
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <style>
+        @media (max-width: 768px) {
+            .main .block-container {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            .stButton button {
+                width: 100%;
+            }
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 if "user" not in st.session_state:
     st.session_state.user = None
 if "theme_name" not in st.session_state:
