@@ -19,15 +19,15 @@ if st.session_state.get("user") is None:
     st.stop()
 
 user = st.session_state.user
-user_id = user.get("user_id", "1")
+user_id = user.get("user_id", "")
 
 st.markdown(f"<h1 style='color:{theme['accent1']}'>📜 История транзакций</h1>", unsafe_allow_html=True)
-st.caption(f"Пользователь: {user.get('username')} | ID: {user_id}")
+st.caption(f"Пользователь: {user.get('username', user_id)} | VK ID: {user_id}")
 
 transactions, api_ok = get_transactions(user_id)
 
 if not api_ok:
-    st.caption("⚠️ Используются демо-данные")
+    st.warning("⚠️ Не удалось загрузить историю транзакций с API.")
 
 if transactions:
     df = pd.DataFrame(transactions)

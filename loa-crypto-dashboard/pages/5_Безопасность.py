@@ -18,10 +18,10 @@ if st.session_state.get("user") is None:
     st.stop()
 
 user = st.session_state.user
-user_id = user.get("user_id", "1")
+user_id = user.get("user_id", "")
 
 st.markdown(f"<h1 style='color:{theme['accent1']}'>🔒 Безопасность аккаунта</h1>", unsafe_allow_html=True)
-st.caption(f"Пользователь: {user.get('username')} | ID: {user_id}")
+st.caption(f"Пользователь: {user.get('username', user_id)} | VK ID: {user_id}")
 
 st.subheader("🛡️ Статус сессии")
 

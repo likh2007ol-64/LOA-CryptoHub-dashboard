@@ -17,15 +17,15 @@ if st.session_state.get("user") is None:
     st.stop()
 
 user = st.session_state.user
-user_id = user.get("user_id", "1")
+user_id = user.get("user_id", "")
 
 st.markdown(f"<h1 style='color:{theme['accent1']}'>📋 Отчёты и подписки</h1>", unsafe_allow_html=True)
-st.caption(f"Пользователь: {user.get('username')} | ID: {user_id}")
+st.caption(f"Пользователь: {user.get('username', user_id)} | VK ID: {user_id}")
 
 subscription, api_ok = get_reports_subscription(user_id)
 
 if not api_ok:
-    st.caption("⚠️ Используются демо-данные")
+    st.warning("⚠️ Не удалось загрузить настройки подписки с API.")
 
 st.subheader("📧 Подписка на ежедневные отчёты")
 
@@ -49,10 +49,13 @@ with st.form("subscription_form"):
         value=subscription.get("email", user.get("email", "")),
         placeholder="your@email.com",
     )
+    freq_options = ["daily", "weekly", "monthly"]
+    current_freq = subscription.get("frequency", "daily")
+    freq_index = freq_options.index(current_freq) if current_freq in freq_options else 0
     frequency = st.selectbox(
         "Частота отчётов",
-        ["daily", "weekly", "monthly"],
-        index=["daily", "weekly", "monthly"].index(subscription.get("frequency", "daily")),
+        freq_options,
+        index=freq_index,
         format_func=lambda x: {"daily": "Ежедневно", "weekly": "Еженедельно", "monthly": "Ежемесячно"}[x],
     )
     submitted = st.form_submit_button("Сохранить настройки", use_container_width=True)

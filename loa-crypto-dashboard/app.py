@@ -70,15 +70,16 @@ with st.sidebar:
                 with st.spinner("Проверка пользователя..."):
                     user_data, api_ok = get_user(vk_id_input.strip())
                     st.session_state.api_live = api_ok
-                    if user_data:
+                    if user_data is not None:
                         st.session_state.user = user_data
-                        st.success(f"Добро пожаловать, {user_data.get('username', 'Пользователь')}!")
+                        name = user_data.get("username") or f"user_{vk_id_input.strip()}"
+                        st.success(f"Добро пожаловать, {name}!")
                         st.rerun()
                     else:
-                        st.error("Пользователь не найден. Проверьте VK ID.")
+                        st.error("Пользователь не найден или API недоступен. Проверьте VK ID.")
             else:
                 st.warning("Введите VK ID для входа.")
-        st.caption("Тестовые ID: 1 (пользователь), 42 (админ), 100 (эксперт)")
+        st.caption("Введите ваш VK ID для входа")
     else:
         user = st.session_state.user
         role_emoji = "👑" if user.get("role") == "admin" else "⭐"
