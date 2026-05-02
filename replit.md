@@ -42,23 +42,28 @@ loa-crypto-dashboard/
 │   ├── 4_Отчёты.py           # Report subscriptions
 │   ├── 5_Безопасность.py     # Security + session management
 │   ├── 6_Админ_панель.py     # Admin panel (admin only)
-│   └── 7_Мониторинг.py       # System monitoring (admin only)
+│   ├── 7_Мониторинг.py       # System monitoring (admin only)
+│   ├── 8_Кошельки.py         # Wallet management
+│   ├── 9_AI_сигналы.py       # AI signals
+│   ├── 10_DeFi.py            # DeFi analytics (TVL, APY, Gas)
+│   └── 11_Экспорт.py         # CSV export
 ├── utils/
-│   ├── api_client.py         # API integration + mock data
+│   ├── api_client.py         # API integration (connects to external API)
 │   └── theme_manager.py      # Theme management (Dark/Light/Neon/Blue)
-├── requirements.txt
-└── .streamlit/config.toml
+└── .streamlit/config.toml    # Streamlit config (port 5000, headless, 0.0.0.0)
 ```
 
 ### Environment Variables
-- `API_BASE_URL` — Backend API URL (default: `http://localhost:8080`)
+- `API_BASE_URL` — Backend API URL (default: `http://153.80.184.34`)
 
-### Test Credentials
-- VK ID `1` — regular user (Expert subscription)
-- VK ID `42` — administrator
-- VK ID `100` — expert user
+### Auth
+- Login is via VK ID (text input), no Replit Auth — external backend handles user lookup
 
 ### Workflow
 - Name: `LOA-CryptoHub Dashboard`
-- Command: `cd loa-crypto-dashboard && streamlit run app.py`
-- Port: 5000
+- Command: `cd loa-crypto-dashboard && streamlit run app.py --server.port 5000 --server.address 0.0.0.0 --server.headless true`
+- Port: 5000 (webview)
+
+### Notes
+- App runs in demo mode when the external API at `http://153.80.184.34` is unreachable
+- No Replit integrations needed — all data flows through the external backend API
