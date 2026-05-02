@@ -1,8 +1,8 @@
 kind = "api"
-previewPath = "/api"
-title = "API Server"
+previewPath = "/"
+title = "LOA-CryptoHub Dashboard"
 version = "1.0.0"
-id = "3B4_FFSkEVBkAeYMFRJ2e"
+id = "dashboard-loa-cryptohub"
 
 [[services]]
 localPort = 8080
@@ -10,7 +10,7 @@ name = "LOA-CryptoHub Dashboard"
 paths = ["/"]
 
 [services.development]
-run = "pnpm --filter @workspace/api-server run dev"
+run = "cd loa-crypto-dashboard && streamlit run app.py --server.port 8080 --server.address 0.0.0.0 --server.headless true"
 
 [services.production.run]
 args = ["bash", "-c", "cd loa-crypto-dashboard && streamlit run app.py --server.port 8080 --server.address 0.0.0.0 --server.headless true"]
@@ -19,4 +19,4 @@ args = ["bash", "-c", "cd loa-crypto-dashboard && streamlit run app.py --server.
 PORT = "8080"
 
 [services.production.health.startup]
-path = "/_stcore/health"
+path = "/"
