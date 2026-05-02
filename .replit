@@ -3,7 +3,7 @@ modules = ["nodejs-24", "python-3.11"]
 [deployment]
 router = "application"
 deploymentTarget = "autoscale"
-run = ["streamlit", "run", "app.py", "--server.port", "5000"]
+run = ["bash", "-c", "cd loa-crypto-dashboard && streamlit run app.py --server.port 8080 --server.address 0.0.0.0 --server.headless true"]
 
 [deployment.postBuild]
 args = ["pnpm", "store", "prune"]
@@ -46,13 +46,14 @@ localPort = 5000
 externalPort = 80
 
 [[ports]]
-localPort = 8081
-externalPort = 80
-
-[[ports]]
 localPort = 8501
 externalPort = 3000
 
 [nix]
 channel = "stable-25_05"
 packages = ["glibcLocales"]
+
+[userenv]
+
+[userenv.shared]
+API_BASE_URL = "https://loa-crypto-hub-api.replit.app"
